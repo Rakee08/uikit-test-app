@@ -20,3 +20,16 @@ jobs:
           -archivePath build/UIKitTestApp.xcarchive \
           -destination 'generic/platform=iOS' \
           CODE_SIGNING_ALLOWED=NO
+          
+      - name: Export IPA
+        run: |
+          xcodebuild -exportArchive \
+          -archivePath build/UIKitTestApp.xcarchive \
+          -exportOptionsPlist ExportOptions.plist \
+          -exportPath build
+
+      - name: Upload IPA Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-ipa
+          path: build/*.ipa
