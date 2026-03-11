@@ -6,19 +6,17 @@ on:
 
 jobs:
   build:
-
     runs-on: macos-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Select Xcode version
-        run: sudo xcode-select -s /Applications/Xcode.app
-
-      - name: Build iOS App
+      - name: Build Archive (Unsigned)
         run: |
-          xcodebuild clean build \
+          xcodebuild archive \
           -project UIKitTestApp.xcodeproj \
           -scheme UIKitTestApp \
-          -destination 'generic/platform=iOS Simulator'
+          -archivePath build/UIKitTestApp.xcarchive \
+          -destination 'generic/platform=iOS' \
+          CODE_SIGNING_ALLOWED=NO
